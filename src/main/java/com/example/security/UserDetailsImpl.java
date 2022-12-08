@@ -14,6 +14,10 @@ import lombok.AllArgsConstructor;
 public class UserDetailsImpl implements UserDetails {
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7991754208762453389L;
 	private final Usuario usuario;
 
 	@Override
