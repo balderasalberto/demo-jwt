@@ -13,7 +13,7 @@ import lombok.Data;
 public class Contacto {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nombre;
 	private LocalDate fechaNacimiento;

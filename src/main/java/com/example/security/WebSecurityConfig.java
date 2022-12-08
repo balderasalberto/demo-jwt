@@ -18,26 +18,23 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class WebSecurityConfig {
 
-	
 	private final UserDetailsService userDetailsService;
 	private final JWTAuthorizationFilter jwtAuthorizationFilter;
-	
-	
+
 	@Bean
-	@SuppressWarnings("deprecation")
-	SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authManager) throws Exception {
-		
-		JWTAuthenticationFilter jwtAuthenticationFilter = new JWTAuthenticationFilter();
+	SecurityFilterChain
+			filterChain(HttpSecurity http, AuthenticationManager authManager)
+					throws Exception {
+
+		JWTAuthenticationFilter jwtAuthenticationFilter =
+				new JWTAuthenticationFilter();
 		jwtAuthenticationFilter.setAuthenticationManager(authManager);
 		jwtAuthenticationFilter.setFilterProcessesUrl("/login");
-		
-		
-		
-		
+
 		return http
 				.csrf()
 				.disable()
-				.authorizeRequests()
+				.authorizeHttpRequests()
 				.anyRequest()
 				.authenticated()
 				.and()
@@ -47,20 +44,24 @@ public class WebSecurityConfig {
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
 				.addFilter(jwtAuthenticationFilter)
-				.addFilterBefore(jwtAuthorizationFilter,UsernamePasswordAuthenticationFilter.class)
+				.addFilterBefore(
+						jwtAuthorizationFilter,
+						UsernamePasswordAuthenticationFilter.class)
 				.build();
 
 	}
 
-//	@Bean
-//	UserDetailsService userDetailsService() {
-//		InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-//		manager.createUser(User.withUsername("admin").password(passwordEncoder().encode("admin")).roles().build());
-//		return manager;
-//	}
+	// @Bean
+	// UserDetailsService userDetailsService() {
+	// InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+	// manager.createUser(User.withUsername("admin").password(passwordEncoder().encode("admin")).roles().build());
+	// return manager;
+	// }
 
 	@Bean
-	AuthenticationManager authManager(HttpSecurity http, PasswordEncoder passwordEncoder) throws Exception {
+	AuthenticationManager
+			authManager(HttpSecurity http, PasswordEncoder passwordEncoder)
+					throws Exception {
 		return http
 				.getSharedObject(AuthenticationManagerBuilder.class)
 				.userDetailsService(userDetailsService)
@@ -69,10 +70,13 @@ public class WebSecurityConfig {
 				.build();
 	}
 
-	
 	@Bean
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+
+	// public static void main(String[] args) {
+	// System.out.println("PASS "+new BCryptPasswordEncoder().encode("darwin"));
+	// }
 
 }

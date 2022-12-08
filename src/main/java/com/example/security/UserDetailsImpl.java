@@ -12,8 +12,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class UserDetailsImpl implements UserDetails {
-	
-	
+
 	/**
 	 * 
 	 */
@@ -61,7 +60,7 @@ public class UserDetailsImpl implements UserDetails {
 		// TODO Auto-generated method stub
 		return true;
 	}
-	
+
 	public String getNombre() {
 		return usuario.getNombre();
 	}
